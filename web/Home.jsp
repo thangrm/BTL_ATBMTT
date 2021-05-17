@@ -23,7 +23,9 @@
         <header>
             <div class="container">
                 <div class="logo">
-                    <img src="image/login.svg" alt="logo" width="100px">
+                    <a href="/ATBMTT_BTL/Home">
+                        <img src="image/login.svg" alt="logo" width="100px">
+                    </a>
                 </div>
                 <div class="search-box">
                     <form method="get" class="form-search" id="formSearch">
@@ -53,15 +55,16 @@
         <div class="container">
             <div class="list-product">
                 <%for (int i = 0; i < list.size(); i++) {
-                    Product product = (Product) list.get(i);
-                    String name = product.getName();
-                    if(name.length() > 80)
-                        name = name.substring(0,80) + "...";
-                    DecimalFormat formatter = new DecimalFormat("###,###,###");
-                    String price = formatter.format(product.getPrice())+" VNĐ";
+                        Product product = (Product) list.get(i);
+                        String name = product.getName();
+                        if (name.length() > 80) {
+                            name = name.substring(0, 80) + "...";
+                        }
+                        DecimalFormat formatter = new DecimalFormat("###,###,###");
+                        String price = formatter.format(product.getPrice()) + " VNĐ";
                 %>
                 <div class="product" id="product-<%=product.getId()%>">
-                    <img src="image/<%=product.getImage()%>" class="image-product">
+                    <img src="image/uploads/<%=product.getImage()%>" class="image-product">
                     <span class="title-product"><%=name%></span>
                     <span class="price-product"><%=price%></span>
                 </div>

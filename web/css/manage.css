@@ -6,7 +6,7 @@ and open the template in the editor.
 
 
 /* 
-    Created on : May 16, 2021, 3:22:02 PM
+    Created on : May 17, 2021, 3:52:01 PM
     Author     : Hoàng Thắng <hoangthangrm>
 */
 
@@ -22,8 +22,6 @@ body {
 
 .container {
     width: 1200px;
-    display: flex;
-    align-items: center;
     padding: 5px;
 }
 
@@ -31,6 +29,14 @@ body {
 /*=====header=====*/
 
 header {
+    background-color: white;
+}
+
+.container-header {
+    width: 1200px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
     background-color: white;
 }
 
@@ -127,45 +133,90 @@ header {
 }
 
 
-/*=====product=====*/
+/*=====table=====*/
 
-.list-product {
-    width: 100%;
-    text-align: left;
-}
-
-.product {
-    display: inline-block;
-    width: 250px;
-    border: 1px solid transparent;
+.form-wrap {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding-top: 10px;
+    width: 800px;
     background-color: white;
-    box-shadow: 0px 0px 2px 0px #aaa;
-    margin: 20px 5px 10px 5px;
 }
 
-.product:hover {
-    border-color: orange;
+.form-wrap .form-group {
+    width: 250px;
+}
+
+.form-wrap .form-group span {
+    display: block;
+    text-align: left;
+    margin: 20px 0px 5px 0px;
+}
+
+.form-wrap .form-group input {
+    width: 300px;
+    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    padding: 1px 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-group-btn {
+    padding: 20px;
+}
+
+.btn-form {
+    width: 100px;
+    height: 35px;
+    margin-left: 80px;
+    background-color: #00b359;
+    border: none;
+    border-radius: 3px;
+    color: white;
+}
+
+.btn-form:hover {
+    background-color: #00994d;
     cursor: pointer;
 }
 
-.image-product {
-    width: 100%;
-    height: 250px;
+.message {
+    color: green;
 }
 
-.title-product {
-    width: 100%;
-    height: 55px;
-    overflow: hidden;
-    display: block;
-    font-size: 15px;
-}
-
-.price-product {
-    display: block;
-    text-align: left;
-    margin: 30px 5px 20px 5px;
+.error {
     color: red;
-    font-size: 16px;
-    font-weight: bold;
+    display: block;
+}
+
+
+/*=====table=====*/
+
+.products {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+.products td,
+.products th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.products tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.products tr:hover {
+    background-color: #ddd;
+}
+
+.products th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
 }

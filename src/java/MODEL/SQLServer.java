@@ -66,11 +66,18 @@ public class SQLServer {
         }
         return null;
     }
+    
     public static ArrayList<Product> getProducts(){
-        return SQLServer.getProducts(null);
+        return SQLServer.getProducts(-1,null);
+    }
+    public static ArrayList<Product> getProducts(String search){
+        return SQLServer.getProducts(-1,search);
+    }
+    public static ArrayList<Product> getProducts(int idFilter){
+        return SQLServer.getProducts(idFilter,null);
     }
     
-    public static ArrayList<Product> getProducts(String search) {
+    public static ArrayList<Product> getProducts(int idFilter, String search) {
         ArrayList<Product> listProducts = new ArrayList<>();
         try {
             // connnect to database
@@ -79,11 +86,19 @@ public class SQLServer {
             Statement stmt = conn.createStatement();
             ResultSet rs;
             String sql;
-            if(search == null || search == "")
-                sql = "select * from products";
-            else
-                sql = "select * from products where nameProduct like '%"+search+"%'";
-            System.out.println(sql);
+            if(search == null || search == ""){
+                if(idFilter == -1)
+                    sql = "select * from products";
+                else
+                    sql = "select * from products where idUser = '"+idFilter+"'";
+            }
+            else{
+                if(idFilter == -1)
+                    sql = "select * from products where nameProduct like '%"+search+"%'";
+                else
+                    sql = "select * from products where nameProduct like '%"+search+"%' and idUser = '"+idFilter+"'";
+            }
+
             rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 int id = rs.getInt(1);
@@ -103,4 +118,23 @@ public class SQLServer {
         return null;
     }
     
+    public static boolean addProduct(int idUser, String name, String image, String price) {
+        try {
+            // connnect to database
+            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+            // crate statement
+            Statement stmt = conn.createStatement();
+
+            String sql = "INSERT INTO products"
+                    + " VALUES (NULL, '"+idUser+"', '"+name+"', '"+image+"', '"+price+"')";
+            stmt.execute(sql);
+
+            // close connection
+            conn.close();
+            return true;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return false;
+        }
+    }
 }

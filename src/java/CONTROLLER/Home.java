@@ -30,7 +30,7 @@ public class Home extends HttpServlet {
         RequestDispatcher dispatcher;
         request.setCharacterEncoding("UTF-8");
         String search = (String)request.getParameter("search");
-        System.out.println("search:" + search);
+
         if(session.getAttribute("user") == null){
             response.sendRedirect(request.getContextPath() + "/Login");
         }else{
