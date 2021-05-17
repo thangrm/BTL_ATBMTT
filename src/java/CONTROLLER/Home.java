@@ -5,7 +5,10 @@
  */
 package CONTROLLER;
 
+import ENTITY.Product;
+import MODEL.SQLServer;
 import java.io.IOException;
+import java.util.ArrayList;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -25,10 +28,14 @@ public class Home extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
-        
+        request.setCharacterEncoding("UTF-8");
+        String search = (String)request.getParameter("search");
+        System.out.println("search:" + search);
         if(session.getAttribute("user") == null){
             response.sendRedirect(request.getContextPath() + "/Login");
         }else{
+            ArrayList<Product> listProducts = SQLServer.getProducts(search);
+            request.setAttribute("listProducts", listProducts);
             dispatcher = request.getRequestDispatcher("Home.jsp");
             dispatcher.forward(request, response);
         }

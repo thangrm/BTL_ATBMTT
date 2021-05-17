@@ -3,8 +3,169 @@ To change this license header, choose License Headers in Project Properties.
 To change this template file, choose Tools | Templates
 and open the template in the editor.
 */
+
+
 /* 
     Created on : May 16, 2021, 3:22:02 PM
     Author     : Hoàng Thắng <hoangthangrm>
 */
 
+* {
+    margin: 0 auto;
+    text-align: center;
+    font-family: sans-serif, 'Courier New', Courier, monospace;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+.container {
+    width: 1200px;
+    display: flex;
+    align-items: center;
+    padding: 5px;
+}
+
+
+/*=====header=====*/
+
+header {
+    background-color: white;
+}
+
+.form-search {
+    position: relative;
+}
+
+.search {
+    width: 280px;
+    height: 28px;
+    border: none;
+    box-shadow: 0px 0px 6px 1px #aaa;
+    border-radius: 10px;
+    padding-left: 20px;
+    font-size: medium;
+    text-align: left;
+}
+
+.search:focus {
+    outline: none;
+}
+
+.btn-search {
+    position: absolute;
+    top: 16%;
+    right: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.btn-search img {
+    width: 18px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.avatar {
+    position: relative;
+}
+
+.infor {
+    display: flex;
+    align-items: center;
+}
+
+.infor-user a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-management {
+    width: 180px;
+    background-color: white;
+    position: absolute;
+    box-shadow: 0px 0px 6px 0px #aaa;
+    display: none;
+    top: 100%;
+    right: -90px;
+}
+
+.user-management ul {
+    padding: 0px;
+}
+
+.user-management li {
+    height: 50px;
+    list-style: none;
+}
+
+.user-management li a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-align: left;
+    line-height: 50px;
+    padding-left: 10px;
+}
+
+.user-management li:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.avatar:hover {
+    cursor: pointer;
+}
+
+.infor:hover .user-management {
+    display: block;
+}
+
+
+/*=====product=====*/
+
+.list-product {
+    width: 100%;
+    text-align: left;
+}
+
+.product {
+    display: inline-block;
+    width: 250px;
+    border: 1px solid transparent;
+    background-color: white;
+    box-shadow: 0px 0px 2px 0px #aaa;
+    margin: 20px 5px 10px 5px;
+}
+
+.product:hover {
+    border-color: orange;
+    cursor: pointer;
+}
+
+.image-product {
+    width: 100%;
+    height: 250px;
+}
+
+.title-product {
+    width: 100%;
+    height: 55px;
+    overflow: hidden;
+    display: block;
+    font-size: 15px;
+}
+
+.price-product {
+    display: block;
+    text-align: left;
+    margin: 30px 5px 20px 5px;
+    color: red;
+    font-size: 16px;
+    font-weight: bold;
+}

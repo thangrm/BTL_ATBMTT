@@ -9,15 +9,17 @@ package MODEL;
  *
  * @author Hoàng Thắng <hoangthangrm>
  */
+import ENTITY.Product;
 import ENTITY.User;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 public class SQLServer {
 
-    private static String DB_URL = "jdbc:mysql://localhost:3306/webjava";
+    private static String DB_URL = "jdbc:mysql://localhost:3306/atbmtt";
     private static String USER_NAME = "root";
     private static String PASSWORD = "";
 
@@ -37,16 +39,16 @@ public class SQLServer {
 
     public static User validateLogin(String username, String password) {
         try {
-            // connnect to database 'testdb'
+            // connnect to database
             Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
             // crate statement
             Statement stmt = conn.createStatement();
-            // get data from table 'student'
+
             //username = "' or 1 = 1 -- ";
             //password = "1811";
             ResultSet rs = stmt.executeQuery("select * from users "
                     + "where username = '" + username + " ' and password = '" + password + "'");
-            // show data
+            
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
@@ -64,4 +66,41 @@ public class SQLServer {
         }
         return null;
     }
+    public static ArrayList<Product> getProducts(){
+        return SQLServer.getProducts(null);
+    }
+    
+    public static ArrayList<Product> getProducts(String search) {
+        ArrayList<Product> listProducts = new ArrayList<>();
+        try {
+            // connnect to database
+            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+            // crate statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs;
+            String sql;
+            if(search == null || search == "")
+                sql = "select * from products";
+            else
+                sql = "select * from products where nameProduct like '%"+search+"%'";
+            System.out.println(sql);
+            rs = stmt.executeQuery(sql);
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                int idUser = rs.getInt(2);
+                String name = rs.getString(3);
+                String image = rs.getString(4);
+                Double price = rs.getDouble(5);
+                Product product = new Product(id, idUser, name, image, price);
+                listProducts.add(product);
+            }   
+            // close connection
+            conn.close();
+            return listProducts;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
+    }
+    
 }
