@@ -1,0 +1,222 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+
+
+/* 
+    Created on : May 17, 2021, 3:52:01 PM
+    Author     : Hoàng Thắng <hoangthangrm>
+*/
+
+* {
+    margin: 0 auto;
+    text-align: center;
+    font-family: sans-serif, Courier New, Courier, monospace;
+}
+
+body {
+    background-color: whitesmoke;
+}
+
+.container {
+    width: 1200px;
+    padding: 5px;
+}
+
+
+/*=====header=====*/
+
+header {
+    background-color: white;
+}
+
+.container-header {
+    width: 1200px;
+    padding: 5px;
+    display: flex;
+    align-items: center;
+    background-color: white;
+}
+
+.form-search {
+    position: relative;
+}
+
+.search {
+    width: 280px;
+    height: 28px;
+    border: none;
+    box-shadow: 0px 0px 6px 1px #aaa;
+    border-radius: 10px;
+    padding-left: 20px;
+    font-size: medium;
+    text-align: left;
+}
+
+.search:focus {
+    outline: none;
+}
+
+.btn-search {
+    position: absolute;
+    top: 16%;
+    right: 0;
+    background-color: transparent;
+    border: none;
+}
+
+.btn-search img {
+    width: 18px;
+}
+
+.circle {
+    width: 50px;
+    height: 50px;
+    border-radius: 100%;
+}
+
+.avatar {
+    position: relative;
+}
+
+.infor {
+    display: flex;
+    align-items: center;
+}
+
+.infor-user a {
+    text-decoration: none;
+    color: black;
+}
+
+.user-management {
+    width: 180px;
+    background-color: white;
+    position: absolute;
+    box-shadow: 0px 0px 6px 0px #aaa;
+    display: none;
+    top: 100%;
+    right: -90px;
+}
+
+.user-management ul {
+    padding: 0px;
+}
+
+.user-management li {
+    height: 50px;
+    list-style: none;
+}
+
+.user-management li a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-align: left;
+    line-height: 50px;
+    padding-left: 10px;
+}
+
+.user-management li:hover {
+    background-color: whitesmoke;
+    cursor: pointer;
+}
+
+.avatar:hover {
+    cursor: pointer;
+}
+
+.infor:hover .user-management {
+    display: block;
+}
+
+
+/*=====table=====*/
+
+.form-wrap {
+    margin-top: 10px;
+    margin-bottom: 50px;
+    padding-top: 10px;
+    width: 800px;
+    background-color: white;
+}
+
+.form-wrap .form-group {
+    width: 250px;
+}
+
+.form-wrap .form-group span {
+    display: block;
+    text-align: left;
+    margin: 20px 0px 5px 0px;
+}
+
+.form-wrap .form-group input {
+    width: 300px;
+    height: 30px;
+    text-align: left;
+    font-size: 16px;
+    padding: 1px 10px;
+    background-color: white;
+    border-radius: 5px;
+}
+
+.form-group-btn {
+    padding: 20px;
+}
+
+.btn-form {
+    width: 100px;
+    height: 35px;
+    margin-left: 80px;
+    background-color: #00b359;
+    border: none;
+    border-radius: 3px;
+    color: white;
+}
+
+.btn-form:hover {
+    background-color: #00994d;
+    cursor: pointer;
+}
+
+.message {
+    color: green;
+}
+
+.error {
+    color: red;
+    display: block;
+}
+
+
+/*=====table=====*/
+
+.products {
+    border-collapse: collapse;
+    width: 80%;
+}
+
+.products td,
+.products th {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+.products tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+.products tr:hover {
+    background-color: #ddd;
+}
+
+.products th {
+    padding-top: 12px;
+    padding-bottom: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+}

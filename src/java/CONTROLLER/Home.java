@@ -6,6 +6,7 @@
 package CONTROLLER;
 
 import ENTITY.Product;
+import LIB.Filter;
 import MODEL.SQLServer;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -22,23 +23,27 @@ import javax.servlet.http.HttpSession;
  * @author Hoàng Thắng <hoangthangrm>
  */
 @WebServlet(urlPatterns = {"/Home"})
-public class Home extends HttpServlet {
+public class Home extends HttpServlet{
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         RequestDispatcher dispatcher;
         request.setCharacterEncoding("UTF-8");
-        String search = (String)request.getParameter("search");
-
-        if(session.getAttribute("user") == null){
+        String search = (String) request.getParameter("search");
+        search = Filter.escapeHTML(search);
+        if (session.getAttribute("user") == null) {
             response.sendRedirect(request.getContextPath() + "/Login");
-        }else{
+        } else {
             ArrayList<Product> listProducts = SQLServer.getProducts(search);
             request.setAttribute("listProducts", listProducts);
+            if (search == null) {
+                search = "Tất cả";
+            }
+            request.setAttribute("search", search);
             dispatcher = request.getRequestDispatcher("Home.jsp");
             dispatcher.forward(request, response);
         }
     }
-
 }

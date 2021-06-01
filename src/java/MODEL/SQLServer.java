@@ -11,8 +11,10 @@ package MODEL;
  */
 import ENTITY.Product;
 import ENTITY.User;
+import LIB.PasswordHash;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -26,6 +28,7 @@ public class SQLServer {
     public static Connection getConnection(String dbURL, String userName,
             String password) {
         Connection conn = null;
+
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = DriverManager.getConnection(dbURL, userName, password);
@@ -41,22 +44,31 @@ public class SQLServer {
         try {
             // connnect to database
             Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
-            // crate statement
-            Statement stmt = conn.createStatement();
 
-            //username = "' or 1 = 1 -- ";
-            //password = "1811";
+            // Statement
+//            PreparedStatement ps = conn.prepareStatement("select * from users "
+//                    + "where username = ? and password = ?");
+//            ps.setString(1, username);
+//            ps.setString(2, password);
+//            ResultSet rs = ps.executeQuery();
+            Statement stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("select * from users "
-                    + "where username = '" + username + " ' and password = '" + password + "'");
-            
+                    + "where username = '" + username + " ' and password = '" + password+"'" );
+
             while (rs.next()) {
                 int id = rs.getInt(1);
                 String name = rs.getString(2);
+                String hashPass = rs.getString(3);
                 String email = rs.getString(4);
                 User user = new User(id, name, email);
                 conn.close();
                 return user;
-            }   
+//                if (PasswordHash.validatePassword(password, hashPass)) {
+//                    User user = new User(id, name, email);
+//                    conn.close();
+//                    return user;
+//                }
+            }
 
             // close connection
             conn.close();
@@ -67,16 +79,48 @@ public class SQLServer {
         return null;
     }
     
-    public static ArrayList<Product> getProducts(){
-        return SQLServer.getProducts(-1,null);
+    public static User checkCookie(String cookie) {
+        try {
+            // connnect to database
+            Connection conn = getConnection(DB_URL, USER_NAME, PASSWORD);
+
+            // Statement
+            Statement stmt = conn.createStatement();
+            ResultSet rs = stmt.executeQuery("select * from users");
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                String name = rs.getString(2);
+                String pass = rs.getString(3);
+                String email = rs.getString(4);
+                if (PasswordHash.validatePassword(name, cookie)) {
+                    User user = new User(id, name, email);
+                    conn.close();
+                    return user;
+                }
+            }
+
+            // close connection
+            conn.close();
+            return null;
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+        return null;
     }
-    public static ArrayList<Product> getProducts(String search){
-        return SQLServer.getProducts(-1,search);
+
+    public static ArrayList<Product> getProducts() {
+        return SQLServer.getProducts(-1, null);
     }
-    public static ArrayList<Product> getProducts(int idFilter){
-        return SQLServer.getProducts(idFilter,null);
+
+    public static ArrayList<Product> getProducts(String search) {
+        return SQLServer.getProducts(-1, search);
     }
-    
+
+    public static ArrayList<Product> getProducts(int idFilter) {
+        return SQLServer.getProducts(idFilter, null);
+    }
+
     public static ArrayList<Product> getProducts(int idFilter, String search) {
         ArrayList<Product> listProducts = new ArrayList<>();
         try {
@@ -86,17 +130,18 @@ public class SQLServer {
             Statement stmt = conn.createStatement();
             ResultSet rs;
             String sql;
-            if(search == null || search == ""){
-                if(idFilter == -1)
+            if (search == null || search == "") {
+                if (idFilter == -1) {
                     sql = "select * from products";
-                else
-                    sql = "select * from products where idUser = '"+idFilter+"'";
-            }
-            else{
-                if(idFilter == -1)
-                    sql = "select * from products where nameProduct like '%"+search+"%'";
-                else
-                    sql = "select * from products where nameProduct like '%"+search+"%' and idUser = '"+idFilter+"'";
+                } else {
+                    sql = "select * from products where idUser = '" + idFilter + "'";
+                }
+            } else {
+                if (idFilter == -1) {
+                    sql = "select * from products where nameProduct like '%" + search + "%'";
+                } else {
+                    sql = "select * from products where nameProduct like '%" + search + "%' and idUser = '" + idFilter + "'";
+                }
             }
 
             rs = stmt.executeQuery(sql);
@@ -108,7 +153,7 @@ public class SQLServer {
                 Double price = rs.getDouble(5);
                 Product product = new Product(id, idUser, name, image, price);
                 listProducts.add(product);
-            }   
+            }
             // close connection
             conn.close();
             return listProducts;
@@ -117,7 +162,7 @@ public class SQLServer {
         }
         return null;
     }
-    
+
     public static boolean addProduct(int idUser, String name, String image, String price) {
         try {
             // connnect to database
@@ -126,7 +171,7 @@ public class SQLServer {
             Statement stmt = conn.createStatement();
 
             String sql = "INSERT INTO products"
-                    + " VALUES (NULL, '"+idUser+"', '"+name+"', '"+image+"', '"+price+"')";
+                    + " VALUES (NULL, '" + idUser + "', '" + name + "', '" + image + "', '" + price + "')";
             stmt.execute(sql);
 
             // close connection

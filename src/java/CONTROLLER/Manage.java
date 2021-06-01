@@ -7,6 +7,7 @@ package CONTROLLER;
 
 import ENTITY.Product;
 import ENTITY.User;
+import LIB.Filter;
 import MODEL.SQLServer;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -73,6 +74,10 @@ public class Manage extends HttpServlet {
                 String price = request.getParameter("priceProduct");
                 Part part = request.getPart("imageProduct");
                 String realPath = request.getServletContext().getRealPath("/image/uploads");
+                //Lọc dữ liệu
+//                name = Filter.escapeHTML(name);
+//                price = Filter.escapeHTML(price);
+//                realPath = Filter.escapeHTML(realPath);
                 
                 //Lấy tên file ảnh
                 String filename = Paths.get(part.getSubmittedFileName()).getFileName().toString();
@@ -82,7 +87,7 @@ public class Manage extends HttpServlet {
                 if (!Files.exists(Paths.get(realPath))) {
                     Files.createDirectories(Paths.get(realPath));
                 }
-
+                
                 String fileType = part.getContentType();
                 if (fileType.indexOf("image") >= 0) {
                     String pathSave = Paths.get(realPath, filename).toString();

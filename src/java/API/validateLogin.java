@@ -5,7 +5,6 @@ package API;
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
@@ -16,6 +15,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import MODEL.SQLServer;
 import ENTITY.User;
+import LIB.PasswordHash;
+import java.nio.charset.StandardCharsets;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
+import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
@@ -23,6 +30,7 @@ import ENTITY.User;
  */
 @WebServlet(urlPatterns = {"/validateLogin"})
 public class validateLogin extends HttpServlet {
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
@@ -30,12 +38,21 @@ public class validateLogin extends HttpServlet {
         String password = request.getParameter("password");
         PrintWriter out = response.getWriter();
         User user = SQLServer.validateLogin(username, password);
-        if(user == null)
+        if (user == null) {
             out.print("False");
-        else{
-            out.print("True");
-            HttpSession session = request.getSession();
-            session.setAttribute("user", user);
+        } else {
+            try {
+                //set sesstion
+                HttpSession session = request.getSession();
+                session.setAttribute("user", user);
+                Cookie ck = new Cookie("user", PasswordHash.createHash(user.getUsername()));
+                response.addCookie(ck);
+                out.print("True");
+            } catch (NoSuchAlgorithmException ex) {
+                Logger.getLogger(validateLogin.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (InvalidKeySpecException ex) {
+                Logger.getLogger(validateLogin.class.getName()).log(Level.SEVERE, null, ex);
+            }
         }
     }
 }

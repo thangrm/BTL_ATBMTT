@@ -5,11 +5,14 @@
  */
 package ENTITY;
 
+import LIB.Filter;
+
 /**
  *
  * @author Hoàng Thắng <hoangthangrm>
  */
 public class Product {
+
     protected int id;
     protected int idUser;
     protected String name;
@@ -22,8 +25,11 @@ public class Product {
         this.name = name;
         this.image = image;
         this.price = price;
+        
+//        this.name = Filter.escapeHTML(name);
+//        this.image = Filter.escapeHTML(image);
     }
-    
+
     public int getId() {
         return id;
     }
@@ -62,5 +68,5 @@ public class Product {
 
     public void setPrice(Double price) {
         this.price = price;
-    }   
+    }
 }
