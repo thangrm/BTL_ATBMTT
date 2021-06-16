@@ -16,13 +16,11 @@ import javax.servlet.http.HttpSession;
 import MODEL.SQLServer;
 import ENTITY.User;
 import LIB.PasswordHash;
-import java.nio.charset.StandardCharsets;
 import java.security.NoSuchAlgorithmException;
 import java.security.spec.InvalidKeySpecException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.http.Cookie;
-import org.apache.commons.codec.digest.DigestUtils;
 
 /**
  *
